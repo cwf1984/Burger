@@ -5,7 +5,7 @@ var router = express.Router();
 
 router.get("/", function(req, res) {
 
-    burger.all(function(data) {
+    burger.selectAll(function(data) {
         var hbsObject = {
             burgers: data
         };
@@ -17,7 +17,7 @@ router.get("/", function(req, res) {
 
 router.post("/api/burger", function(req, res) {
 
-    burger.create({
+    burger.insertOne({
         burger_name: req.body.burger_name
     }).then(function(result) {
         res.json({ id: result.addBurger})
@@ -26,27 +26,27 @@ router.post("/api/burger", function(req, res) {
 
 router.put("/api/burger/:id", function(req, res) {
 
-    burger.update({
+    burger.updateOne({
         burger_name: req.body.burger_name,
         devoured: req.body.devoured
     }, {
-        where: req.body.id
+        where: req.params.id
     }).then(function(result) {
         res.json(result)
     });
 
 });
 
-router.delete("api/burger/:id", function(req, res) {
+// router.delete("api/burger/:id", function(req, res) {
 
-    burger.destroy({
-        where: {
-            id = req.params.id
-        }
-    }).then(function(result) {
-        res.json(result)
-    });
+//     burger.destroy({
+//         where: {
+//             id = req.params.id
+//         }
+//     }).then(function(result) {
+//         res.json(result)
+//     });
 
-});
+// });
 
 module.exports = router;
